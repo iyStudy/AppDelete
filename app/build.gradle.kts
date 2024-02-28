@@ -7,6 +7,11 @@ android {
     namespace = "com.example.deleteapp"
     compileSdk = 34
 
+    buildFeatures {
+        viewBinding = true
+        dataBinding = true
+    }
+
     defaultConfig {
         applicationId = "com.example.deleteapp"
         minSdk = 28
