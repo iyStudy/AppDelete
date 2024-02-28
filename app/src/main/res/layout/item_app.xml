@@ -16,26 +16,26 @@
 
 
         <ImageView
-            android:id="@+id/appIconImageView"
+            android:id="@+id/iv_app_icon"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:layout_gravity="center" />
 
     <TextView
-        android:id="@+id/appNameTextView"
+        android:id="@+id/tv_app_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="14sp" />
 
         <TextView
-            android:id="@+id/tvSize"
+            android:id="@+id/tv_size"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
             android:textSize="10sp" />
 
         <TextView
-            android:id="@+id/tvDate"
+            android:id="@+id/tv_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
