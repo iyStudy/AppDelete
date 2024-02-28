@@ -1,0 +1,19 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_sort_by_name"
+        android:title="名前で並び替え"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_sort_by_date"
+        android:title="日付で並び替え"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_sort_by_size"
+        android:title="サイズで並び替え"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+</menu>
+
