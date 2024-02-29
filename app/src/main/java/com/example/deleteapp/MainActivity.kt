@@ -33,6 +33,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var uninstallLauncher: ActivityResultLauncher<Intent>
 
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -107,27 +108,34 @@ class MainActivity : AppCompatActivity() {
      */
     fun getAllUserInstalledApps(context: Context): List<AppData> {
         val pm = context.packageManager
+        val currentPackageName = context.packageName  // 現在のアプリのパッケージ名を取得
         val storageStatsManager = context.getSystemService(Context.STORAGE_STATS_SERVICE) as StorageStatsManager
         val installedApps = pm.getInstalledApplications(PackageManager.GET_META_DATA)
-            .filter { (it.flags and ApplicationInfo.FLAG_SYSTEM) == 0 }
+            .filter { (it.flags and ApplicationInfo.FLAG_SYSTEM) == 0 && it.packageName != currentPackageName }  // 自身のアプリを除外
 
         val dateFormat = SimpleDateFormat("yyyy/MM/dd", Locale.getDefault())
 
-        return installedApps.map { appInfo ->
-            val storageStats = storageStatsManager.queryStatsForUid(appInfo.storageUuid, appInfo.uid)
-            val appSize = Formatter.formatFileSize(context, storageStats.appBytes)
-            val packageInfo = pm.getPackageInfo(appInfo.packageName, 0)
-            val installTime = dateFormat.format(Date(packageInfo.firstInstallTime))
-            AppData(
-                label = appInfo.loadLabel(pm).toString(),
-                icon = appInfo.loadIcon(pm),
-                packageName = appInfo.packageName,
-                size = appSize,  // アプリのサイズを設定
-                sizeBytes = storageStats.appBytes,  // バイト単位のサイズを設定
-                installTime = installTime // インストール日時を設定
-            )
+        return installedApps.mapNotNull { appInfo ->
+            try {
+                val storageStats = storageStatsManager.queryStatsForUid(appInfo.storageUuid, appInfo.uid)
+                val appSize = Formatter.formatFileSize(context, storageStats.appBytes)
+                val packageInfo = pm.getPackageInfo(appInfo.packageName, 0)
+                val installTime = dateFormat.format(Date(packageInfo.firstInstallTime))
+                AppData(
+                    label = appInfo.loadLabel(pm).toString(),
+                    icon = appInfo.loadIcon(pm),
+                    packageName = appInfo.packageName,
+                    size = appSize,
+                    sizeBytes = storageStats.appBytes,
+                    installTime = installTime
+                )
+            } catch (e: Exception) {
+                Log.e("AppList", "Error getting app details", e)
+                null
+            }
         }
     }
+
 
 
     /**
