@@ -7,5 +7,6 @@
     <style name="Theme.DeleteApp" parent="Base.Theme.DeleteApp">
         <item name="actionOverflowButtonStyle">@style/OverflowMenuButtonStyle</item>
         <item name="colorPrimary">@color/toolbar_gray</item>
+        <item name="android:textColor">@color/textColorPrimary</item>
     </style>
 </resources>
